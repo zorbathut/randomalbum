@@ -113,3 +113,5 @@ $RECYCLE.BIN/
 
 .cache-*
 spotify_keys.py
+venv
+nohup.out
