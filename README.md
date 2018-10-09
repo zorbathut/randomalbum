@@ -23,3 +23,7 @@ Look on my works, ye Mighty, and despair.
 ----
 
 I guess this is dual-licensed under MIT and Unlicense because that's the thing I've been doing lately.
+
+----
+
+Edit: I don't know why Github decided to use exploding camel emojis for the .gitattributes. I frankly suspect this repository is cursed. Gonna go see if there's a slab I need to return, brb
