@@ -48,6 +48,8 @@ if __name__ == '__main__':
 		print(f'found {len(playlists)} playlists')
 
 		trackery = []
+		artistry = {}
+		albumry = {}
 
 		for playlist in playlists:
 			if playlist['owner']['id'] != username:
@@ -68,6 +70,7 @@ if __name__ == '__main__':
 			print(playlist['name'])
 			print('  total tracks', playlist['tracks']['total'])
 			results = sp.user_playlist(username, playlist['id'], fields="tracks,next")
+			
 			deeztracks = []
 			tracks = results['tracks']
 			deeztracks += tracks['items']
@@ -76,18 +79,34 @@ if __name__ == '__main__':
 				tracks = sp.next(tracks)
 				deeztracks += tracks['items']
 				show_tracks(tracks)
-			trackery += [deeztracks]
+
+			compiledtracks = [track['track']['id'] for track in deeztracks]
+			trackery += [compiledtracks]
+			artistry[deeztracks[0]['track']['artists'][0]['id']] = True
+			albumry[deeztracks[0]['track']['album']['id']] = True
+		
+		for artist in artistry:
+			albums = sp.artist_albums(artist, album_type="album", limit=50)
+			albums = [album for album in albums['items'] if album['id'] not in albumry]
+			
+			if len(albums) == 0:
+				continue
+
+			chosenalbum = albums[random.randrange(len(albums))]
+			
+			print(f"Spicing it up with {chosenalbum['artists'][0]['name']} - {chosenalbum['name']}")
+			albumdata = sp.album_tracks(chosenalbum['id'])
+			albumtracks = [track['id'] for track in albumdata['items']]
+			trackery += [albumtracks]
 
 		random.shuffle(trackery)
 		flattrack = [track for album in trackery for track in album]
-
-		pp = pprint.PrettyPrinter(indent=4)
 
 		print("Creating . . .")
 		pigl = sp.user_playlist_create(username, "Shuffle!", public=False)
 		for offset in range(0, len(flattrack), 50):
 			sp.user_playlist_add_tracks(username, pigl['id'], [
-			                            track['track']['id'] for track in flattrack[offset:offset+50]])
+			                            track for track in flattrack[offset:offset+50]])
 	else:
 		print("Can't get token for", username)
 
