@@ -1,3 +1,6 @@
 # You will need to get your own from https://developer.spotify.com/my-applications
 client_id = "ba5eba11ba5eba11ba5eba11ba5eba11"
 client_secret = "a5be5705a5be5705a5be5705a5be5705"
+
+# Set this to your username
+username = "beefmaster3000"

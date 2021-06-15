@@ -38,13 +38,7 @@ def get_all_playlists(sp, username):
 
 
 if __name__ == '__main__':
-	if len(sys.argv) > 1:
-		username = sys.argv[1]
-	else:
-		print("Whoops, need your username!")
-		print("usage: python user_playlists.py [username]")
-		sys.exit()
-
+	username = spotify_keys.username
 	token = util.prompt_for_user_token(username, "playlist-read-private playlist-modify-private",
 	                                   spotify_keys.client_id, spotify_keys.client_secret, "http://localhost:8888/callback")
 
