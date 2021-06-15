@@ -12,15 +12,17 @@ import yaml
 from atomicwrites import atomic_write
 
 try:
-    with open('cache.yaml', 'r') as f:
-        cache = yaml.load(f)
+	with open('cache.yaml', 'r') as f:
+		cache = yaml.load(f)
 except IOError:
-    cache = {}
+	cache = {}
+
 
 def show_tracks(results):
 	for i, item in enumerate(tracks['items']):
 		track = item['track']
 		print("   %d %32.32s %s" % (i, track['artists'][0]['name'], track['name']))
+
 
 def get_all_playlists(sp, username):
 	accum = []
@@ -34,6 +36,7 @@ def get_all_playlists(sp, username):
 			break
 	return accum
 
+
 if __name__ == '__main__':
 	if len(sys.argv) > 1:
 		username = sys.argv[1]
@@ -42,7 +45,8 @@ if __name__ == '__main__':
 		print("usage: python user_playlists.py [username]")
 		sys.exit()
 
-	token = util.prompt_for_user_token(username, "playlist-read-private playlist-modify-private", spotify_keys.client_id, spotify_keys.client_secret, "http://localhost:8888/callback")
+	token = util.prompt_for_user_token(username, "playlist-read-private playlist-modify-private",
+	                                   spotify_keys.client_id, spotify_keys.client_secret, "http://localhost:8888/callback")
 
 	if token:
 		sp = spotipy.Spotify(auth=token)
@@ -88,7 +92,8 @@ if __name__ == '__main__':
 		print("Creating . . .")
 		pigl = sp.user_playlist_create(username, "Shuffle!", public=False)
 		for offset in range(0, len(flattrack), 50):
-			sp.user_playlist_add_tracks(username, pigl['id'], [track['track']['id'] for track in flattrack[offset:offset+50]])
+			sp.user_playlist_add_tracks(username, pigl['id'], [
+			                            track['track']['id'] for track in flattrack[offset:offset+50]])
 	else:
 		print("Can't get token for", username)
 
