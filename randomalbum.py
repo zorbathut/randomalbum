@@ -13,7 +13,7 @@ from atomicwrites import atomic_write
 
 try:
 	with open('cache.yaml', 'r') as f:
-		cache = yaml.load(f)
+		cache = yaml.safe_load(f)
 except IOError:
 	cache = {}
 
