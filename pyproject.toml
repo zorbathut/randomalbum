@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "randomalbum"
+version = "0.1.0"
+description = ""
+authors = ["Ben Rog-Wilhelm <zorba-github@pavlovian.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+spotipy = "^2.22.1"
+PyYAML = "^6.0"
+atomicwrites = "^1.4.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
