@@ -77,8 +77,10 @@ if __name__ == '__main__':
 			show_tracks(tracks)
 			while tracks['next']:
 				tracks = sp.next(tracks)
-				deeztracks += tracks['items']
-				show_tracks(tracks)
+				if 'items' in tracks:
+					# this probably shouldn't ever fail, but right now it does on Toby Fox's Undertale album
+					deeztracks += tracks['items']
+					show_tracks(tracks)
 
 			compiledtracks = [track['track']['id'] for track in deeztracks]
 			trackery += [compiledtracks]
